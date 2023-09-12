@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Brand>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Sku>
  */
-class BrandFactory extends Factory
+class SkuFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,6 +18,7 @@ class BrandFactory extends Factory
     {
         return [
             "name" => $this->faker->word(),
+            "price" => $this->faker->randomFloat(2, 0, 2000),
         ];
     }
 }
