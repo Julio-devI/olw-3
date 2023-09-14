@@ -17,9 +17,4 @@ class FeatureSku extends Pivot
         "feature_id",
         "value",
     ];
-
-    public function skus(): HasMany
-    {
-
-    }
 }
