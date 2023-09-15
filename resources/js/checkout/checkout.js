@@ -94,5 +94,13 @@ export default () => ({
                },
            },
        });
+   },
+
+   async pixOrBankSlipPayment(method){
+       this.$wire.pixOrBankSlipPayment({
+           amount : this.$wire.$get("cart_total"),
+           method,
+           cpf: this.$wire.$get('user.cpf')
+       });
    }
 });

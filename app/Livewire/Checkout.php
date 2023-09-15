@@ -28,7 +28,12 @@ class Checkout extends Component
 
     public function creditCardPayment($data)
     {
+        dd($data);
+    }
 
+    public function pixOrBankSlipPayment($data)
+    {
+        dd($data);
     }
 
     public function submitInformationStep()
