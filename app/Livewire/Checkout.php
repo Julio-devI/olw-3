@@ -12,6 +12,7 @@ class Checkout extends Component
 {
     public array $cart = [];
     public int $step = CheckoutStepsEnum::PAYMENT->value;
+    public int $method = 1;
     public UserForm $user;
     public AddressForm $address;
 
