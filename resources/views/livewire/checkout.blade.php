@@ -37,65 +37,42 @@
                 aria-labelledby="payment-and-shipping-heading"
                 class="py-16 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:w-full lg:max-w-lg lg:pb-24 lg:pt-0"
             >
-                <form action="">
+
                     <div class="mx-auto max-w-2xl px-4 lg:max-w-none lg:px-0">
-                        <div class="">
 
-                            <x-section-title title="Informacoes de contato" />
+                        <div>
 
-                            <div class="mt-6">
-                                <label for="email-address" class="block text-sm font-medium text-white">
-                                    E-mail address
-                                </label>
+                            <div class="flex flex-row items-center text-white">
 
-                                <div class="mt-1">
-                                    <input
-                                        type="email"
-                                        id="email-address"
-                                        name="email"
-                                        autocomplete="email"
-                                        class="block w-full rounded-md text-primary-200 bg-terciary-800 border-gray-300 shadow-sm focus:border-primary-200 focus:ring-primary-200 sm:text-sm"
-                                        placeholder="Digite seu e-mail"
-                                    />
-                                </div>
-                            </div>
+                                <nav class="flex mb-4" aria-label="Breadcrumb">
+                                    <ol class="text-xs inline-flex items-center space-x-1 md:space-x-3">
+                                        <li @class(['font-bold' => $step === CheckoutStepsEnum::INFORMATION->value])>
+                                            <span>{{ CheckoutStepsEnum::INFORMATION->getName() }}</span>
+                                        </li>
+                                        <li @class(['inline-flex items-center', 'font-bold' => $step === CheckoutStepsEnum::SHIPPING->value])>
+                                            <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                            </svg>
+                                            <span>{{ CheckoutStepsEnum::SHIPPING->getName() }}</span>
+                                        </li>
+                                        <li @class(['inline-flex items-center', 'font-bold' => $step === CheckoutStepsEnum::PAYMENT->value])>
 
-                            <div class="mt-10">
-                                <x-section-title title="Detalhes do pagamento"/>
+                                            <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                                            </svg>
+                                            <span>{{ CheckoutStepsEnum::PAYMENT->getName() }}</span>
+                                        </li>
+                                    </ol>
+                                </nav>
 
-                                <div class="mt-6 grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4">
-                                    <div class="col-span-3 sm:col-span-4">
-                                        <x-input-label for="card-number" value="Numero do cartao" />
-                                        <div class="mt-1">
-                                            <x-text-input
-                                                type="text"
-                                                id="card-number"
-                                                name="card-number"
-                                                placeholder="Numero do cartao"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div class="col-span-2 sm:col-span-3">
-                                        <x-input-label for="expiration-date" value="Data de expiração"/>
-                                        <div class="mt-1">
-                                            <x-text-input
-                                                type="text"
-                                                id="expiration-date"
-                                                name="expiration-date"
-                                                placeholder-="MM / AA"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mt-10">
-                                <x-section-title title="Endereço" />
+                                @if($step === CheckoutStepsEnum::INFORMATION->value)
+                                    <x-checkout.information-form :user = "$user" />
+                                @endif
                             </div>
                         </div>
+
                     </div>
-                </form>
+
             </section>
         </div>
     </div>
