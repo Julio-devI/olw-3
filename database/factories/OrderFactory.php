@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\OrderStepsEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Psy\Util\Str;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Order>
@@ -20,7 +20,7 @@ class OrderFactory extends Factory
     {
         return [
             "session_id" => Str::uuid(),
-            "total" => $this->faker->randomFloat(2,0,9000),
+            "total" => $this->faker->randomFloat(2,0,900),
             "status" => $this->faker->randomElement([OrderStepsEnum::CART, OrderStepsEnum::PAID, OrderStepsEnum::PENDING, OrderStepsEnum::CANCELED]),
         ];
     }

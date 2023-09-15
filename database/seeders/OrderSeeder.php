@@ -17,10 +17,10 @@ class OrderSeeder extends Seeder
     public function run($session_id = null): void
     {
         $cart = Order::factory()
-            ->count(1)
+            ->count(2)
             ->create([
                 'session_id' => $session_id ?? Str::uuid(),
-                'status' => OrderStatusEnum::CART
+                'status' => OrderStepsEnum::CART
             ]);
 
         $cart->each(function ($cart) {

@@ -1,5 +1,4 @@
-<x-app-layout>
-    <div class="bg-terciary-900">
+<div class="bg-terciary-900">
         <div class="fixed left-0 top-0 hidden lg:block h-full w-1/2 bg-terciary-900 " aria-hidden= "true"></div>
         <div class="fixed right-0 top-0 hidden lg:block h-full w-1/2 bg-terciary-800 " aria-hidden= "true"></div>
 
@@ -14,15 +13,21 @@
                         <dt class="text-lg font-medium text-primary-200">Resumo</dt>
                     </dl>
                     <x-checkout.product-list>
-                        <x-checkout.product-item /> //falta adicionar os dados para serem apresentados
+                        @foreach($cart['skus'] as $sku)
+                            <x-checkout.product-item
+                                :name="$sku['name']"
+                                :price="$sku['price']"
+                                :features="collect($sku['features'])->map(fn($feature) => $feature['name'] . ': ' . $feature['pivot']['value'])"
+                                :quantity="$sku['pivot']['quantity']"
+                                image="https://tailwindui.com/img/ecommerce-images/checkout-page-07-product-01.jpg"
+                            />
+                        @endforeach
                     </x-checkout.product-list>
 
                     <dl class="space-y-6 border-t border-white border-opacity-10 pt-6 text-sm font-medium">
-
-                        <x-checkout.summary-item title="Subtotal" value="570.00" />
-                        <x-checkout.summary-item title="Frete" value="570.00" />
-                        <x-checkout.summary-item title="Taxas" value="10.00" />
-                        <x-checkout.summary-item title="Total" value="1150.00": isLast="true" />
+                        <x-checkout.summary-item title="Subtotal" :value="$cart['total']" />
+                        <x-checkout.summary-item title="Frete" value="0" />
+                        <x-checkout.summary-item title="Total" :value="$cart['total']" :isLast="true" />
                     </dl>
                 </div>
 
@@ -75,21 +80,22 @@
                                         <x-input-label for="expiration-date" value="Data de expiração"/>
                                         <div class="mt-1">
                                             <x-text-input
-                                            type="text"
-                                            id="expiration-date"
-                                            name="expiration-date"
-                                            placeholder-="MM / AA"
+                                                type="text"
+                                                id="expiration-date"
+                                                name="expiration-date"
+                                                placeholder-="MM / AA"
                                             />
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+                            <div class="mt-10">
+                                <x-section-title title="Endereço" />
+                            </div>
                         </div>
                     </div>
                 </form>
             </section>
-
         </div>
     </div>
-</x-app-layout><?php

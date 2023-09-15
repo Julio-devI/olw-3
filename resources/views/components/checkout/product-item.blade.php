@@ -12,5 +12,6 @@
             @endforeach
         </div>
         <p class="flex-none text-base font-medium text-secondary-300">R$ {{ $price }}</p>
+        <p class="text-white">x {{$quantity}}</p>
     </li>
 </div>
