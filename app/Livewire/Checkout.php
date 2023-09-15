@@ -12,7 +12,7 @@ class Checkout extends Component
 {
     public array $cart = [];
     public int $step = CheckoutStepsEnum::PAYMENT->value;
-    public int $method = 1;
+    public int|null $method = null;
     public UserForm $user;
     public AddressForm $address;
 
@@ -24,6 +24,11 @@ class Checkout extends Component
     public function findAddress()
     {
         $this->address->findAddress();
+    }
+
+    public function creditCardPayment($data)
+    {
+
     }
 
     public function submitInformationStep()
