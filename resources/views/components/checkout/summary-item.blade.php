@@ -6,6 +6,6 @@
     ])
 >
     <dt class="text-primary-200">{{ $title }}</dt>
-    <dd class="text-secondary-300">R$ {{ $value }}</dd>
+    <dd class="text-secondary-300">@money($value)</dd>
 </div>
 

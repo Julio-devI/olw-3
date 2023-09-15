@@ -11,7 +11,7 @@
                 <p class="text-primary-200">{{ $feature }}</p>
             @endforeach
         </div>
-        <p class="flex-none text-base font-medium text-secondary-300">R$ {{ $price }}</p>
+        <p class="flex-none text-base font-medium text-secondary-300">@money($price)</p>
         <p class="text-white">x {{$quantity}}</p>
     </li>
 </div>
