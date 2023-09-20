@@ -5,8 +5,15 @@
     use App\Enums\OrderStepsEnum;
     use App\Models\Order;
     use Database\Seeders\OrderSeeder;
+    use MercadoPago\SDK;
 
     class CheckoutService {
+
+        public function __construct()
+        {
+            SDK::setAccessToken(config('payment.mercadopago.access_token'));
+        }
+
         public function loadCart(): array
         {
             $cart = Order::with('skus.product', 'skus.features')
@@ -26,5 +33,26 @@
             }
 
             return $cart->toArray();
+        }
+
+        public function creditCardPayment($data)
+        {
+            $payment = new Payment();
+            $payment->transaction_amount = (float)$data['transaction_amount'];
+            $payment->token = $data['token'];
+            $payment->description = $data['description'];
+            $payment->installments = (int)$data['installments'];
+            $payment->payment_method_id = $data['payment_method_id'];
+            $payment->issuer_id = (int)$data['issuer_id'];
+
+            $payer = new Payer();
+            $payer->email = $data['payer']['email'];
+            $payer->identification = array(
+                "type" => $data['payer']['identification']['type'],
+                "number" => $data['payer']['identification']['number']
+            );
+            $payer->payer = $payer;
+
+            $payment->save();
         }
     }
