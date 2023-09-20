@@ -3,6 +3,7 @@
     namespace App\Services;
 
     use App\Enums\OrderStepsEnum;
+    use App\Exceptions\PaymentException;
     use App\Models\Order;
     use Database\Seeders\OrderSeeder;
     use MercadoPago\SDK;
@@ -54,5 +55,13 @@
             $payer->payer = $payer;
 
             $payment->save();
+
+            throw_if(
+                !$payment->id || $payment->status === 'rejected',
+                PaymentException::class,
+                $payment?->error?->message ?? "Verifique os dados do cartao"
+            );
+
+            return $payment;
         }
     }

@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Enums\CheckoutStepsEnum;
+use App\Exceptions\PaymentException;
 use App\Livewire\Forms\AddressForm;
 use App\Livewire\Forms\UserForm;
 use App\Services\CheckoutService;
@@ -29,8 +30,19 @@ class Checkout extends Component
 
     public function creditCardPayment(CheckoutService $checkoutService, $data)
     {
-        $checkoutService->creditCardPayment($data);
+        try {
+            $checkoutService->creditCardPayment($data);
+        }
+        catch (PaymentException $e)
+        {
+            $this->addError('payment', $e->getMessage());
+        }
+        catch (\Exception $e)
+        {
+            $this->addError('payment', $e->getMessage());
+        }
     }
+
 
     public function pixOrBankSlipPayment($data)
     {
