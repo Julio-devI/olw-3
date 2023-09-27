@@ -6,7 +6,9 @@
     use App\Exceptions\PaymentException;
     use App\Models\Order;
     use Database\Seeders\OrderSeeder;
+    use Illuminate\Support\Str;
     use MercadoPago\SDK;
+    use MercadoPago\Payment;
 
     class CheckoutService {
 
@@ -36,7 +38,7 @@
             return $cart->toArray();
         }
 
-        public function creditCardPayment($data)
+        public function creditCardPayment($data, $user, $address)
         {
             $payment = new Payment();
             $payment->transaction_amount = (float)$data['transaction_amount'];
@@ -46,13 +48,7 @@
             $payment->payment_method_id = $data['payment_method_id'];
             $payment->issuer_id = (int)$data['issuer_id'];
 
-            $payer = new Payer();
-            $payer->email = $data['payer']['email'];
-            $payer->identification = array(
-                "type" => $data['payer']['identification']['type'],
-                "number" => $data['payer']['identification']['number']
-            );
-            $payer->payer = $payer;
+            $payment->payer = $this->buildPayer($user, $address);
 
             $payment->save();
 
@@ -63,5 +59,46 @@
             );
 
             return $payment;
+        }
+
+        public function pixOrBankSlipPayment($data, $user, $address)
+        {
+            $payment = new Payment();
+            $payment->transaction_amount = $data['amount'];
+            $payment->description = "Titulo do produto";
+            $payment->payment_method_id = $data['method'];
+            $payment->payer = $this->buildPayer($user, $address);
+
+            $payment->save();
+
+            throw_if(
+                !$payment->id || $payment->status === 'rejected',
+                PaymentException::class,
+                $payment?->error?->message ?? "Verifique os dados do cartao"
+            );
+
+            return $payment;
+        }
+
+        public function buildPayer($user, $address)
+        {
+            $first_name =  explode(' ', $user['name'])[0];
+            return array(
+                "email" => $user['email'],
+                "first_name" => $first_name,
+                "last_name" => Str::of($user['name'])->after($first_name)->trim(),
+                "identification" => array(
+                    "type" => "CPF",
+                    "number" => $user['cpf']
+                ),
+                "address" => array(
+                    "zip_code" => $address['zipcode'],
+                    "street_name" => $address['address'],
+                    "street_number" => $address['number'],
+                    "neighborhood" => $address['district'],
+                    "city" => $address['city'],
+                    "federal_unit" => $address['state']
+                )
+            );
         }
     }
