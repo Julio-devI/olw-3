@@ -7,6 +7,7 @@ use App\Exceptions\PaymentException;
 use App\Livewire\Forms\AddressForm;
 use App\Livewire\Forms\UserForm;
 use App\Services\CheckoutService;
+use App\Services\OrderService;
 use App\Services\UserService;
 use Livewire\Component;
 
@@ -45,12 +46,12 @@ class Checkout extends Component
     }
 
 
-    public function pixOrBankSlipPayment(CheckoutService $checkoutService, $data, UserService $userService)
+    public function pixOrBankSlipPayment(CheckoutService $checkoutService, $data, UserService $userService, OrderService $orderService)
     {
         try{
             $payment = $checkoutService->pixOrBankSlipPayment($data, $this->user->all(), $this->address->all());
             $user = $userService->store($this->user->all(), $this->address->all());
-
+            $order = $orderService->update($this->cart['id'], $payment, $user, $this->address);
         } catch (PaymentException $e){
             $this->addError('payment', $e->getMessage());
         }catch (\Exception $e){
