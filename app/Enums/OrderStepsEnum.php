@@ -21,6 +21,22 @@
             };
         }
 
+        public function parse($status)
+        {
+            switch ($status){
+                case 'pending':
+                    return self::PENDING;
+                case 'approved':
+                    return self::PAID;
+                case 'rejected':
+                    return self::REJECTED;
+                case 'canceled':
+                    return self::CANCELED;
+                default:
+                    return self::CANCELED;
+            }
+        }
+
         public function getStyle(): string
         {
             return match ($this) {

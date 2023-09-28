@@ -45,11 +45,12 @@ class Checkout extends Component
     }
 
 
-    public function pixOrBankSlipPayment(CheckoutService $checkoutService,UserService $userService, $data)
+    public function pixOrBankSlipPayment(CheckoutService $checkoutService, $data, UserService $userService)
     {
         try{
             $payment = $checkoutService->pixOrBankSlipPayment($data, $this->user->all(), $this->address->all());
             $user = $userService->store($this->user->all(), $this->address->all());
+
         } catch (PaymentException $e){
             $this->addError('payment', $e->getMessage());
         }catch (\Exception $e){
