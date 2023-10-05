@@ -1,5 +1,6 @@
 <?php
 
+    namespace App\Enums;
     enum PaymentMethodEnum: int
     {
         case CREDIT_CARD = 1;
