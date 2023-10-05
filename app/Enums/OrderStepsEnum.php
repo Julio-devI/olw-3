@@ -37,7 +37,7 @@
             }
         }
 
-        public function getStyle(): string
+        public function getStyles(): string
         {
             return match ($this) {
                 self::CART => "px-2 py-0.5 text-xs rounded-full bg-gray-100 text-gray-800",

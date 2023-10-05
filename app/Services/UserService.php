@@ -16,7 +16,7 @@
                 $user = User::create([...$userData, 'password' => bcrypt(Str::uuid())]);
             }
 
-            $user->address()->create($address);
+            $user->addresses()->create($address);
 
             return $user;
         }

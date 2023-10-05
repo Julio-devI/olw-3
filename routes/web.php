@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use \App\Livewire\Checkout;
+use App\Livewire\Checkout;
+use App\Livewire\Result;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +24,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get("/checkout", Checkout::class);
+Route::get("/checkout", Checkout::class)->name('checkout');
+Route::get("/pedido-criado/{order_id}", Result::class)->middleware(['signed'])->name('checkout.result');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -13,7 +13,7 @@
             $order->status = OrderStepsEnum::parse($payment->status);
             $order->save();
 
-            $order->payment()->create([
+            $order->payments()->create([
                 'external_id' => $payment->id,
                 'method' => PaymentMethodEnum::parse($payment->payment_type_id),
                 'status' => PaymentStatusEnum::parse($payment->status),
@@ -24,7 +24,7 @@
                 'ticket_url' => $payment?->point_of_interaction?->transaction_data?->ticket_url ?? $payment?->transaction_details?->external_resource_url,
             ]);
 
-            $order->shipping()->create([
+            $order->shippings()->create([
                 'address' => $address['address'],
                 'number' => $address['number'],
                 'complement' => $address['complement'],
