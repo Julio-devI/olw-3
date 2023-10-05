@@ -7,8 +7,9 @@
     use App\Models\Order;
     use Database\Seeders\OrderSeeder;
     use Illuminate\Support\Str;
+    use MercadoPago\Resources\Payment;
+    use MercadoPago\Resources\Payer;
     use MercadoPago\SDK;
-    use MercadoPago\Payment;
 
     class CheckoutService {
 
