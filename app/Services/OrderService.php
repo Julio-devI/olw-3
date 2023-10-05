@@ -19,7 +19,7 @@
                 'status' => PaymentStatusEnum::parse($payment->status),
                 'installments' => $payment->installments,
                 'approved_at' => $payment->date_approved ?? null,
-                'qr_code_64' => $payment?->point_of_interaction?->transaction_data?->qr_code_base64,
+                'qr_code_64' => $payment?->point_of_interaction?->transaction_data?->qr_code_base64 ?? null,
                 'qr_code' => $payment?->point_of_interaction?->transaction_data?->qr_code ?? null,
                 'ticket_url' => $payment?->point_of_interaction?->transaction_data?->ticket_url ?? $payment?->transaction_details?->external_resource_url,
             ]);
