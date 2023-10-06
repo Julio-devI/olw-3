@@ -17,7 +17,7 @@ use Livewire\Component;
 class Checkout extends Component
 {
     public array $cart = [];
-    public int $step = CheckoutStepsEnum::PAYMENT->value;
+    public int $step = CheckoutStepsEnum::INFORMATION->value;
     public int|null $method = null;
     public UserForm $user;
     public AddressForm $address;
