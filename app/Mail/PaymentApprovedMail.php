@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -16,7 +17,7 @@ class PaymentApprovedMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(public Order $order)
     {
         //
     }
@@ -27,7 +28,7 @@ class PaymentApprovedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Payment Approved Mail',
+            subject: 'Pagamento Aprovado com sucesso!',
         );
     }
 
@@ -37,7 +38,10 @@ class PaymentApprovedMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            markdown: 'emails.pagamento-aprovado',
+            with: [
+                'order' => $this->order
+            ]
         );
     }
 
