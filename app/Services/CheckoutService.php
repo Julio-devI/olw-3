@@ -9,13 +9,13 @@
     use Illuminate\Support\Str;
     use MercadoPago\Resources\Payment;
     use MercadoPago\Resources\Payer;
-    use MercadoPago\SDK;
+    use MercadoPago\MercadoPagoConfig;
 
     class CheckoutService {
 
         public function __construct()
         {
-            SDK::setAccessToken(config('payment.mercadopago.access_token'));
+            MercadoPagoConfig::setAccessToken(config('payment.mercadopago.access_token'));
         }
 
         public function loadCart(): array
